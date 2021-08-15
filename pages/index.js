@@ -1,6 +1,7 @@
 import Layout from "@/components/Layout";
+import { API_URL } from "@config/index";
 
-export default function Home() {
+export default function Home({ events }) {
   return (
     <Layout>
       <h1>Upcoming Events</h1>
@@ -9,5 +10,11 @@ export default function Home() {
 }
 
 export async function getServerSideProps() {
-  const res = await fetch()
+  const res = await fetch(`${API_URL}/api/events`);
+  const events = await res.json();
+
+  return {
+    props: { events },
+    revalidate: 1,
+  };
 }
